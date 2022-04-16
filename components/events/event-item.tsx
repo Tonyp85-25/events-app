@@ -14,7 +14,7 @@ export interface EventData{
     location: string
     id:string
     key?:string|number
-    isFeatured: boolean
+    isFeatured?: boolean
 }
 
 function EventItem(props:EventData){
