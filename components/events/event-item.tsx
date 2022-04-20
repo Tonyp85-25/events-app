@@ -6,20 +6,12 @@ import Button from '../ui/button'
 import DateIcon from '../icons/date-icon'
 import AddressIcon from '../icons/address-icon'
 import ArrowRightIcon from '../icons/arrow-right-icon'
+import { EventData } from '../../data/types'
 
-export interface EventData{
-    title:string
-    image: string 
-    date:string 
-    location: string
-    id:string
-    key?:string|number
-    isFeatured: boolean
-}
 
 function EventItem(props:EventData){
 
-    const {title, image, date, location, id} =props
+    const {title, image, date, location, id, isFeatured} =props
     const readableDate = new Date(date).toLocaleString('en-US',{day:'numeric',month:'long',year:'numeric'})
     const formattedAddress = location.replace(', ', '\n')
     const exploreLink = `/events/${id}`

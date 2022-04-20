@@ -1,16 +1,14 @@
-import type { NextPage } from 'next'
+import type { GetStaticPropsContext, NextPage, NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 import EventContent from '../../components/event-detail/event-content'
 import EventLogistics from '../../components/event-detail/event-logistics'
 import EventSummary from '../../components/event-detail/event-summary'
-import { getEventById } from '../../data/dummy-data'
+import { getAllEvents, getEventById } from '../../data/dummy-data'
+import { EventData } from '../../data/types'
 
-const EventDetailPage :NextPage= ()=>{
-    const router = useRouter()
-
-    const eventId = router.query.eventId as string
-    const event = getEventById(eventId)
+const EventDetailPage= (props:{selectedEvent:EventData})=>{
+    const event = props.selectedEvent
     if(!event){
         return (
             <p>No events found!</p>
@@ -25,6 +23,28 @@ const EventDetailPage :NextPage= ()=>{
         </EventContent>
 
     </Fragment>)
+}
+
+export async function getStaticProps(context:GetStaticPropsContext){
+    const eventId = context?.params?.eventId as string
+
+    const event = getEventById(eventId)
+
+    return{
+        props:{
+            selectedEvent:event
+        }
+    }
+
+}
+
+export async function getStaticPaths(){
+    const events = await getAllEvents()
+    const paths = events.map(event=>({params:{eventId:event.id}}))
+    return{
+        paths: paths,
+        fallback:false
+    }
 }
    
 
