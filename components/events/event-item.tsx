@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import Image from 'next/image'
 
 import styles from './event-item.module.css'
 import Button from '../ui/button'
@@ -18,7 +19,7 @@ function EventItem(props:EventData){
 
     return(
         <li className={styles.item}>
-            <img src={'/'+image}
+            <Image src={'/'+image}
             alt={title}/>
             <div className={styles.content}>
                 <div className={styles.summary}>
